@@ -29,25 +29,21 @@ public class Main {
                         System.out.println("Извлеченное значение из поля: " + value);
                         break;
                     case 2:
-                        // Пример 1: Хранилище чисел, значение null
-                        Storage<Integer> intStorageNull = new Storage<>(null, 0);
-                        int result1 = intStorageNull.get();
-                        System.out.println("Результат 1: " + result1); // Вывод: 0
+                        // Пример 1: Хранилище чисел (null -> 0)
+                        Storage<Integer> nullIntegerStorage = new Storage<>(null);
+                        Storage.processStorage(nullIntegerStorage, 0);
 
-                        // Пример 2: Хранилище чисел, значение 99
-                        Storage<Integer> intStorageValue = new Storage<>(99, -1);
-                        int result2 = intStorageValue.get();
-                        System.out.println("Результат 2: " + result2); // Вывод: 99
+                        // Пример 2: Хранилище чисел (99 -> -1)
+                        Storage<Integer> integerStorage = new Storage<>(99);
+                        Storage.processStorage(integerStorage, -1);
 
-                        // Пример 3: Хранилище строк, значение null
-                        Storage<String> stringStorageNull = new Storage<>(null, "default");
-                        String result3 = stringStorageNull.get();
-                        System.out.println("Результат 3: " + result3); // Вывод: default
+                        // Пример 3: Хранилище строк (null -> "default")
+                        Storage<String> nullStringStorage = new Storage<>(null);
+                        Storage.processStorage(nullStringStorage, "default");
 
-                        // Пример 4: Хранилище строк, значение "hello"
-                        Storage<String> stringStorageValue = new Storage<>("hello", "hello world");
-                        String result4 = stringStorageValue.get();
-                        System.out.println("Результат 4: " + result4); // Вывод: hello
+                        // Пример 4: Хранилище строк ("hello" -> "hello world")
+                        Storage<String> stringStorage = new Storage<>("hello");
+                        Storage.processStorage(stringStorage, "hello world");
                         break;
                     default:
                         System.out.println("Неверный номер подзадачи.");

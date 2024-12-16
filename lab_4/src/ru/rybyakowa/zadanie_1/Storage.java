@@ -4,19 +4,28 @@ public class Storage<T> {
     private final T item;
 
     // Конструктор хранилища
-    public Storage(T item, T alternative) {
-        if (item == null) {
-            if (alternative == null) {
-                throw new NullPointerException("альтернатива должна быть не равна null");
-            }
-            this.item = alternative;
-        } else {
-            this.item = item;
-        }
+    public Storage(T item) {
+        this.item = item;
     }
 
     // Упрощенный метод получения объекта из хранилища
-    public T get() {
-        return this.item;
+    public T get(T defaultValue) {
+        T result;  // Объявляем переменную result типа T для хранения результата.
+
+        if (item != null) {
+            // Если item не равен null
+            result = item; // Присваиваем переменной result значение item.
+        } else {
+            // Если item равен null
+            result = defaultValue; // Присваиваем переменной result значение defaultValue.
+        }
+
+        return result; // Возвращаем значение result.
+    }
+
+    // Метод для обработки хранилища и вывода значения
+    public static <T> void processStorage(Storage<T> storage, T defaultValue) {
+        T value = storage.get(defaultValue);
+        System.out.println("Value from storage: " + value);
     }
 }
