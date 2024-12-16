@@ -1,4 +1,6 @@
+import ru.rybyakowa.zadanie_2.putPoint;
 import ru.rybyakowa.zadanie_3.Applier;
+import ru.rybyakowa.zadanie_3.Collector;
 import ru.rybyakowa.zadanie_3.Filter;
 import ru.rybyakowa.zadanie_3.Reducer;
 import ru.rybyakowa.zadanie_2.Point3D;
@@ -6,11 +8,6 @@ import ru.rybyakowa.zadanie_1.Box;
 import ru.rybyakowa.zadanie_1.Storage;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
-
 import java.util.Scanner;
 
 public class Main {
@@ -35,51 +32,36 @@ public class Main {
                         // Пример 1: Хранилище чисел, значение null
                         Storage<Integer> intStorageNull = new Storage<>(null, 0);
                         int result1 = intStorageNull.get();
-                        System.out.println("Результат 1: " + result1);
+                        System.out.println("Результат 1: " + result1); // Вывод: 0
 
                         // Пример 2: Хранилище чисел, значение 99
                         Storage<Integer> intStorageValue = new Storage<>(99, -1);
                         int result2 = intStorageValue.get();
-                        System.out.println("Результат 2: " + result2);
+                        System.out.println("Результат 2: " + result2); // Вывод: 99
 
                         // Пример 3: Хранилище строк, значение null
                         Storage<String> stringStorageNull = new Storage<>(null, "default");
                         String result3 = stringStorageNull.get();
-                        System.out.println("Результат 3: " + result3);
+                        System.out.println("Результат 3: " + result3); // Вывод: default
 
                         // Пример 4: Хранилище строк, значение "hello"
                         Storage<String> stringStorageValue = new Storage<>("hello", "hello world");
                         String result4 = stringStorageValue.get();
-                        System.out.println("Результат 4: " + result4);
+                        System.out.println("Результат 4: " + result4); // Вывод: hello
                         break;
                     default:
                         System.out.println("Неверный номер подзадачи.");
                 }
+                break;
             case 2:
-                Box<Point3D> point3DBox = new Box<>();
+                Box<Point3D> box1 = new Box<>();
+                putPoint.putPointInBox(box1);
+                System.out.println("Box1: " + box1.get());
 
-                System.out.println("Коробка ничего не содержит? " + point3DBox.isEmpty());
+                Box<Point3D> box2 = new Box<>();
+                putPoint.putPointInBox(box2);
+                System.out.println("Box2: " + box2.get());
 
-                System.out.println("Введите координаты точки (x y z): ");
-                double x = getDoubleFromInput(scanner);
-                double y = getDoubleFromInput(scanner);
-                double z = getDoubleFromInput(scanner);
-
-
-                Point3D point3D = new Point3D(x, y, z);
-                point3DBox.put(point3D);
-
-                System.out.println("Коробка ничего не содержит? " + point3DBox.isEmpty());
-
-                try {
-                    Point3D retrievedPoint3D = point3DBox.get();
-                    System.out.println("Извлеченная точка  " + retrievedPoint3D);
-                } catch (IllegalStateException e) {
-                    System.err.println("Ошибка: " + e.getMessage());
-                }
-
-                System.out.println("Коробка ничего не содержит? " + point3DBox.isEmpty());
-                scanner.close();
                 break;
             case 3:
                 System.out.print("Введите номер подзадачи (1-4): ");
@@ -87,96 +69,36 @@ public class Main {
 
                 switch (n3) {
                     case 1:
-                        Applier applier = new Applier();
-
-                        Function<String, Integer> stringLengthFunction = String::length;
-
-                        // Пример 1: преобразование строк в длины
-                        List<String> strings_1 = List.of("qwerty", "asdfg", "zx");
-                        List<Integer> lengths = applier.applyFunction(strings_1, stringLengthFunction);
-                        System.out.println("Длины строк: " + lengths);
-
-                        // Пример 2: преобразование чисел (положительные остаются, отрицательные - положительные)
-                        List<Integer> numbers_1 = List.of(1, -3, 7);
-                        Function<Integer, Integer> absValueFunction = number -> Math.abs(number);
-                        List<Integer> absoluteNumbers = applier.applyFunction(numbers_1, absValueFunction);
-                        System.out.println("Модули чисел: " + absoluteNumbers);
-
-
-                        // Пример 3: преобразование массивов чисел в максимальные значения
-                        List<int[]> intArrays_1 = List.of(new int[]{1, 5, 2}, new int[]{8, 3}, new int[]{4, 9, 6, 0});
-                        Function<int[], Integer> maxArrayValueFunction = arr -> {
-                            if (arr == null || arr.length == 0) return 0;
-                            int maxValue = arr[0];
-                            for (int i = 1; i < arr.length; i++) {
-                                maxValue = Math.max(maxValue, arr[i]);
-                            }
-                            return maxValue;
-                        };
-                        List<Integer> maxValues = applier.applyFunction(intArrays_1, maxArrayValueFunction);
-                        System.out.println("Максимальные значения: " + maxValues);
+                        System.out.println("Длина строк: " + Applier.applyFunction(List.of("qwerty", "asdfg", "zx"), String::length));
+                        System.out.println("Модуль значений: " + Applier.applyFunction(List.of(1, -3, 7), Math::abs));
+                        System.out.println("Максимальное значение: " + Applier.applyFunction(List.of(List.of(1, 2, 3), List.of(-5, -3, 0), List.of(8, 7, 9)), list -> list.stream().max(Integer::compareTo).orElseThrow()));
                         break;
                     case 2:
-                        Filter filter = new Filter();
-
-                        // Пример 1: фильтрация строк по длине
-                        List<String> strings_2 = List.of("qwerty", "asdfg", "zx");
-                        Predicate<String> stringLengthFilter = s -> s.length() >= 3; // lambda expression
-                        List<String> filteredStrings = filter.filter(strings_2, stringLengthFilter);
-                        System.out.println("Отфильтрованные строки: " + filteredStrings);
-
-                        // Пример 2: фильтрация чисел (только отрицательные)
-                        List<Integer> numbers_2 = List.of(1, -3, 7);
-                        Predicate<Integer> positiveFilter = number -> number <= 0; // lambda expression
-                        List<Integer> filteredNumbers = filter.filter(numbers_2, positiveFilter);
-                        System.out.println("Отфильтрованные числа: " + filteredNumbers);
-
-                        // Пример 3: фильтрация массивов (только массивы без положительных элементов)
-                        List<int[]> intArrays_2 = List.of(
-                                new int[]{-1, -5, -2},
-                                new int[]{8, 3},
-                                new int[]{-4, -9, -6, 0}
-                        );
-
-                        Predicate<int[]> noPositiveElementsFilter = arr -> {
-                            if (arr == null) return false;
-                            for (int num : arr) {
-                                if (num > 0) return false;
-                            }
-                            return true;
-                        };
-                        List<int[]> filteredArrays = filter.filter(intArrays_2, noPositiveElementsFilter);
-                        System.out.println("Отфильтрованные массивы: " + Arrays.deepToString(filteredArrays.toArray()));
+                        System.out.println("Строки содержат менее 3 букв: " + Filter.filter(List.of("qwerty", "asdfg", "zx"), x -> x.length() < 3));
+                        System.out.println("Положительные числа: " + Filter.filter(List.of(1, -3, 7), x -> x > 0));
+                        System.out.println("Список, содержащий только отрицательные числа: ");
+                        for (List<Integer> list : Filter.filter(List.of(List.of(1, -2, 3), List.of(-1, -2, -3), List.of(0, -4, -5)), list -> list.stream().allMatch(x -> x < 0))) {
+                            System.out.println(list);
+                        }
                         break;
                     case 3:
-                        Reducer reducer = new Reducer();
-
-                        // Пример 1: Объединение строк
-                        List<String> strings_3 = List.of("qwerty", "asdfg", "zx");
-                        BinaryOperator<String> concatFunction = (s1, s2) -> s1 + s2;
-                        String concatenatedString = reducer.reduce(strings_3, concatFunction, "");
-                        System.out.println("Объединенная строка: " + concatenatedString);
-
-                        // Пример 2: сумма чисел
-                        List<Integer> numbers = List.of(1, -3, 7);
-                        BinaryOperator<Integer> sumFunction = Integer::sum;
-                        Integer sum = reducer.reduce(numbers, sumFunction, 0);
-                        System.out.println("Сумма чисел: " + sum);
+                        System.out.println("Строка из всех строк: " + Reducer.reduce(List.of("qwerty", "asdfg", "zx"), (a, b) -> a + b, ""));
+                        System.out.println("Сумма: " + Reducer.reduce(List.of(1, -3, 7), Integer::sum, 0));
+                        System.out.println("Общее количество элементов: " + Reducer.reduce(List.of(List.of(1, 2), List.of(3, 4, 5), List.of(6)), (a, b) -> a + b.size(), 0));
                         break;
                     case 4:
+                        System.out.println("Массив положительных чисел: " + Collector.collect(List.of(1, -3, 7), ArrayList::new, num -> num > 0));
+                        System.out.println("Массив отрицательных чисел: " + Collector.collect(List.of(1, -3, 7), ArrayList::new, num -> num < 0));
+
+                        System.out.println("Строки длинной 6: " + Collector.collect(List.of("qwerty", "asdfg", "zx", "qw"), ArrayList::new, str -> str.length() == 6));
+                        System.out.println("Строки длинной 2 " + Collector.collect(List.of("qwerty", "asdfg", "zx", "qw"), ArrayList::new, str -> str.length() == 2));
+
+                        System.out.println("Уникальные строки: " + Collector.collect(List.of("qwerty", "asdfg", "qwerty", "qw"), HashSet::new, str -> true));
                         break;
                     default: System.out.println("Неверный номер подзадачи.");
                 }
                 break;
             default: System.out.println("Неверный номер задания.");
         }
-    }
-
-    private static double getDoubleFromInput(Scanner scanner) {
-        while (!scanner.hasNextDouble()) {
-            System.out.print("Неверный ввод. Пожалуйста, введите число: ");
-            scanner.next();
-        }
-        return scanner.nextDouble();
     }
 }

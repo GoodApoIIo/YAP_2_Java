@@ -2,14 +2,21 @@ package ru.rybyakowa.zadanie_1;
 
 public class Storage<T> {
     private final T item;
-    private final T defaultValue;
 
-    public Storage(T item, T defaultValue) { // Конструктор класса Storage
-        this.item = item; // Инициализация хранимого значения
-        this.defaultValue = defaultValue; // Инициализация значения по умолчанию
+    // Конструктор хранилища
+    public Storage(T item, T alternative) {
+        if (item == null) {
+            if (alternative == null) {
+                throw new NullPointerException("альтернатива должна быть не равна null");
+            }
+            this.item = alternative;
+        } else {
+            this.item = item;
+        }
     }
 
-    public T get() { // Метод получения значения
-        return (item != null) ? item : defaultValue; // Возвращает хранимое значение, если оно не null, иначе значение по умолчанию
+    // Упрощенный метод получения объекта из хранилища
+    public T get() {
+        return this.item;
     }
 }

@@ -5,7 +5,7 @@ import java.util.List; // Импорт интерфейса List для рабо
 import java.util.function.Predicate; // Импорт интерфейса Predicate для работы с предикатами (условиями)
 
 public class Filter { // Класс Filter для фильтрации списка на основе предиката
-    public <T> List<T> filter(List<T> list, Predicate<T> predicate) { // Метод filter, принимающий список и предикат
+    public static  <T> List<T> filter(List<T> list, Predicate<T> predicate) { // Метод filter, принимающий список и предикат
         List<T> result = new ArrayList<>(); // Создание нового списка для хранения отфильтрованных элементов
         for (T item : list) { // Итерация по каждому элементу входного списка
             if (predicate.test(item)) { // Проверка элемента с помощью предиката

@@ -18,8 +18,4 @@ public class Box<T> {
         this.item = null; // Удаление элемента из коробки (установка в null)
         return temp; // Возврат элемента
     }
-
-    public boolean isEmpty() { // Метод проверки, пуста ли коробка
-        return this.item == null;
-    }
 }
