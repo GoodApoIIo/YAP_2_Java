@@ -8,7 +8,7 @@ public class Storage<T> {
         this.item = item;
     }
 
-    // Упрощенный метод получения объекта из хранилища
+    // Метод получения объекта из хранилища
     public T get(T defaultValue) {
         T result;  // Объявляем переменную result типа T для хранения результата.
 
