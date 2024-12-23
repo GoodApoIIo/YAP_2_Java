@@ -10,15 +10,14 @@ public class QueueReverser {
         Stack<T> stack = new Stack<>();
         Queue<T> queue2 = new LinkedList<>();
 
-        // 1. Перекладываем элементы из queue1 в stack
+        // Перекладываем элементы из queue1 в stack
         while (!queue1.isEmpty()) {
             stack.push(queue1.remove());
         }
-        // 2. Перекладываем элементы из stack в queue2
+        // Перекладываем элементы из stack в queue2
         while (!stack.isEmpty()) {
             queue2.add(stack.pop());
         }
-
         return queue2;
     }
 }

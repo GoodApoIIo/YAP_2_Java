@@ -1,13 +1,14 @@
 import ru.rybyakowa.zadanie_1.*;
 import ru.rybyakowa.zadanie_2.*;
 import ru.rybyakowa.zadanie_3.*;
+import ru.rybyakowa.zadanie_4.*;
 import ru.rybyakowa.zadanie_5.*;
 import ru.rybyakowa.zadanie_6.*;
 import ru.rybyakowa.zadanie_7.*;
 
 import java.util.*;
 import java.util.stream.*;
-
+import java.io.IOException;
 
 
 public class Main {
@@ -18,31 +19,20 @@ public class Main {
 
         switch (n) {
             case 1:
-                System.out.println("Введите числитель для первой дроби:");
-                int num1 = scanner.nextInt();
-                System.out.println("Введите знаменатель для первой дроби:");
-                int den1 = scanner.nextInt();
-                Drob drob1 = new Drob(num1, den1);
+                FractionInterface decimal1 = new Decimal(1, 2);
+                FractionInterface decimal2 = new Decimal(-5, -2);
 
-                System.out.println("Введите числитель для второй дроби:");
-                int num2 = scanner.nextInt();
-                System.out.println("Введите знаменатель для второй дроби:");
-                int den2 = scanner.nextInt();
-                Drob drob2 = new Drob(num2, den2);
+                DecimalCache decimalCache1 = new DecimalCache((Decimal) decimal1);
+                System.out.println(decimalCache1.getDoubleValue());
+                System.out.println(decimalCache1.getDoubleValue());
+                System.out.println(decimalCache1.getDoubleValue());
 
-                System.out.println("Первая дробь: " + drob1);
-                System.out.println("Вторая дробь: " + drob2);
-                System.out.println("Дроби равны: " + drob1.equals(drob2));
+                decimalCache1.setNumeratorDenominator(3,5);
+                System.out.println(decimalCache1.getDoubleValue());
+                System.out.println(decimalCache1.getDoubleValue());
+                System.out.println(decimalCache1.getDoubleValue());
 
-                System.out.println("Вещественное значение первой дроби: " + drob1.getDoubleValue());
-                System.out.println("Вещественное значение второй дроби: " + drob2.getDoubleValue());
-
-                System.out.println("Введите новый числитель для первой дроби:");
-                int newNum1 = scanner.nextInt();
-                System.out.println("Введите новый знаменатель для первой дроби:");
-                int newDen1 = scanner.nextInt();
-                drob1.setFraction(newNum1, newDen1);
-                System.out.println("Вещественное значение первой дроби после изменения числителя и знаменателя: " + drob1.getDoubleValue());
+                System.out.println("Равны ли дроби? " + decimal1.equals(decimal2));
                 break;
             case 2:
                 Meowable cat = new Cat("Рыжик");
@@ -71,6 +61,14 @@ public class Main {
                 System.out.println("Список после удаления: " + list);
                 break;
             case 4:
+                try {
+                    SmetanaAnalyzer analyzer_4 = new SmetanaPrices();
+                    ((SmetanaPrices) analyzer_4).loadFromFile("C:\\Users\\rybya\\IdeaProjects\\lab_5\\src\\smetana.txt");
+                    int[] cheapestCounts = analyzer_4.getCheapestCounts();
+                    System.out.println("Самый дешёвый сметана: 15: " + cheapestCounts[0] + ", 20: " + cheapestCounts[1] + ", 25: " + cheapestCounts[2]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 5:
                 String fileName = "C:\\Users\\rybya\\IdeaProjects\\lab_5\\src\\text.txt";
@@ -90,10 +88,10 @@ public class Main {
                 int queueSize;
                 // Запрашиваем размер очереди
                 System.out.println("Введите размер очереди:");
-                while(true) {
-                    if(scanner.hasNextInt()) {
+                while (true) {
+                    if (scanner.hasNextInt()) {
                         queueSize = scanner.nextInt();
-                        if(queueSize > 0) {
+                        if (queueSize > 0) {
                             break;
                         } else {
                             System.out.println("Размер должен быть положительным целым числом");
@@ -107,7 +105,7 @@ public class Main {
                 // Ввод элементов очереди
                 System.out.println("Введите " + queueSize + " элементов очереди (целые числа):");
                 for (int i = 0; i < queueSize; i++) {
-                    while(!scanner.hasNextInt()) {
+                    while (!scanner.hasNextInt()) {
                         System.out.println("Неверный ввод. Введите целое число.");
                         scanner.next(); // Очистка ввода
                     }
